@@ -23,4 +23,16 @@ public class TaskListService {
     public Tasks createTask(Tasks tasks){
         return restTemplate.postForObject(urlApi, tasks, Tasks.class); // postando a task (link, tasks significa o que tem dentro da classe Tasks, classe)
     }
+
+    public boolean deleteTask(String name){
+        List<Tasks> tasks = getAllTasks();
+        for(Tasks task : tasks){
+            if(task.getName().equalsIgnoreCase(name)){
+                String deleteUrl = urlApi + '/' + task.getId();
+                restTemplate.delete(deleteUrl);
+                return true;
+            }
+        }
+        return false;
+    }
 }
