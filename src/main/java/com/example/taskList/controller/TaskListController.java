@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 @RestController
 @RequestMapping("/tasks")
@@ -18,6 +19,9 @@ public class TaskListController {
     //no post ele passa como parametros o endpoint -> @Postmapping("/endpoint")
     //e no metodo ele passa @PathVariable("ex: id") String id, @RequestBody NomeDoObjeto body OBS: podemos usar só o requestbody
     //para postar, damos um retorno com o metodo body.getAlgo()
+
+
+
 
     @Autowired
     private TaskListService taskListService;
@@ -42,6 +46,17 @@ public class TaskListController {
         }else{
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping
+    public ResponseEntity<String> renameTask(@RequestBody Tasks body){
+        boolean renamed = taskListService.renameTask(body.getId(), body.getName());
+        if(renamed){
+            return ResponseEntity.ok("Novo nome para task " + body.getId() + ": " + body.getName());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
 

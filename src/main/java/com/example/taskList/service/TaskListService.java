@@ -35,4 +35,18 @@ public class TaskListService {
         }
         return false;
     }
+
+    public boolean renameTask(int id, String novoNome){
+        List<Tasks> tasks = getAllTasks();
+        for(Tasks task: tasks){
+            if(task.getId() == id){
+                task.setName(novoNome);
+                String renameUrl = urlApi + '/' + task.getId();
+                restTemplate.put(renameUrl, task);
+//                return restTemplate.getForObject(renameUrl, Tasks.class);
+                return true;
+            }
+        }
+        return false;
+    }
 }
