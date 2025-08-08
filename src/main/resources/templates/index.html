@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TaskList Java</title>
+</head>
+<body>
+    <div>
+        <h1>TaskList em Java?!?!</h1>
+        <form id="taskForm">
+            <label>Task: </label>
+            <input type="text" id="taskInput" placeholder="Task" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    document.getElementById('taskForm').addEventListener('submit', function(event){
+        event.preventDefault(); // evita o submit padrão do form
+
+        const task = document.getElementById('taskInput').value;
+
+        fetch('/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: task })  // seu objeto Tasks tem campo "name"
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Task criada: ' + data.name);
+            document.getElementById('taskInput').value = ''; // limpa input
+        })
+        .catch(error => {
+            alert('Erro ao criar task');
+            console.error(error);
+        });
+    });
+</script>
+</html>

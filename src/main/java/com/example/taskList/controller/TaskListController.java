@@ -32,7 +32,7 @@ public class TaskListController {
         return ResponseEntity.ok(tasks);
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     public ResponseEntity postTask(@RequestBody Tasks body){
         Tasks createdTask = taskListService.createTask(body);
         return ResponseEntity.ok(createdTask);
@@ -58,6 +58,7 @@ public class TaskListController {
         }
 
     }
+
 
 
 
