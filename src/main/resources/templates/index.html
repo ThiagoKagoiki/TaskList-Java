@@ -8,17 +8,64 @@
     <title>TaskList Java</title>
 </head>
 <body>
-    <div>
-        <h1>TaskList em Java?!?!</h1>
-        <form id="taskForm">
-            <label>Task: </label>
-            <input type="text" id="taskInput" placeholder="Task" required>
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
+<div>
+    <h1>TaskList em Java?!?!</h1>
+    <form id="taskForm">
+        <label>Task: </label>
+        <input type="text" id="taskInput" placeholder="Task" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <h2>Lista de Tasks</h2>
+    <ul id="taskList"></ul>
+</div>
 </body>
 
 <script>
+
+    //Metodo GET para retornar a lista
+
+    const taskListEl = document.getElementById('taskList');
+
+    function carregarTasks() {
+        fetch('/tasks')
+            .then(response => response.json())
+            .then(tasks => {
+                taskListEl.innerHTML = ''; // limpa antes de preencher
+                tasks.forEach(task => {
+                    const li = document.createElement('li');
+                    li.textContent = `${task.id} - ${task.name}`;
+
+                    const btnDelete = document.createElement('button');
+                    btnDelete.textContent = 'Deletar';
+                    btnDelete.addEventListener('click', () => {
+                        if (confirm(`Deseja realmente deletar "${task.name}"?`)) {
+                            fetch('/tasks', {
+                                method: 'DELETE',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ name: task.name })
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    alert('Task deletada!');
+                                    carregarTasks(); // recarregar lista
+                                } else {
+                                    alert('Erro ao deletar task.');
+                                }
+                            })
+                            .catch(error => console.error('Erro ao deletar:', error));
+                        }
+                    });
+
+                    li.appendChild(btnDelete);
+                    taskListEl.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar tasks:', error));
+    }
+
+    //Metodo POST para postar nova Task
+
     document.getElementById('taskForm').addEventListener('submit', function(event){
         event.preventDefault(); // evita o submit padrão do form
 
@@ -35,11 +82,14 @@
         .then(data => {
             alert('Task criada: ' + data.name);
             document.getElementById('taskInput').value = ''; // limpa input
+            carregarTasks();
         })
         .catch(error => {
             alert('Erro ao criar task');
             console.error(error);
         });
     });
+
+    carregarTasks();
 </script>
 </html>
