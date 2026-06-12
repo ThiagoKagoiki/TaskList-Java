@@ -18,6 +18,7 @@ public class TaskListService {
 
     public List<Tasks> getAllTasks(){
         Tasks[] tarefas = restTemplate.getForObject(urlApi, Tasks[].class);
+        System.out.println(List.of(tarefas));
         return List.of(tarefas);
     }
 
