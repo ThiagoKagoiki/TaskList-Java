@@ -24,4 +24,14 @@ public class TaskListService {
     public Tasks postTask(Tasks tasks){
         return restTemplate.postForObject(urlApi, tasks, Tasks.class);
     }
+
+    public String editTask(String new_task, String old_task){
+        List<Tasks> tarefas = getAllTasks();
+        for(Tasks t : tarefas){
+            if(t.getNameTask() == old_task){
+                return "";
+            }
+        }
+        return "";
+    }
 }
