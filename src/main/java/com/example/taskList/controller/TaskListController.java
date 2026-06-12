@@ -33,30 +33,9 @@ public class TaskListController {
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity postTask(@RequestBody Tasks body){
-        Tasks createdTask = taskListService.createTask(body);
-        return ResponseEntity.ok(createdTask);
-    }
-
-    @DeleteMapping
-    public ResponseEntity<String> deleteTask(@RequestBody Tasks body){
-        boolean deleted = taskListService.deleteTask(body.getName());
-        if(deleted){
-            return ResponseEntity.ok("Task deleted: " + body.getName());
-        }else{
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PutMapping
-    public ResponseEntity<String> renameTask(@RequestBody Tasks body){
-        boolean renamed = taskListService.renameTask(body.getId(), body.getName());
-        if(renamed){
-            return ResponseEntity.ok("Novo nome para task " + body.getId() + ": " + body.getName());
-        }else{
-            return ResponseEntity.notFound().build();
-        }
-
+    public ResponseEntity postTask(@RequestBody Tasks task){
+        Tasks createdTask = taskListService.postTask(task);
+        return ResponseEntity.ok("Sucesso!");
     }
 
 

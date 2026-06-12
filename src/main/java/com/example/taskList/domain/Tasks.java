@@ -4,25 +4,38 @@ import lombok.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Tasks {
     //nesta pasta voce criara o objeto task com os getters e setters
-    private int id;
-    private String name;
+    private String nameTask, descTask;
+    private boolean stats;
 
-    public int getId() {
-        return id;
+    public Tasks(String nameTask, String descTask, boolean stats) {
+        this.nameTask = nameTask;
+        this.descTask = descTask;
+        this.stats = stats;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getNameTask() {
+        return nameTask;
     }
 
-    public String getName() {
-        return name;
+    public void setNameTask(String nameTask) {
+        this.nameTask = nameTask;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDescTask() {
+        return descTask;
+    }
+
+    public void setDescTask(String descTask) {
+        this.descTask = descTask;
+    }
+
+    public boolean isStats() {
+        return stats;
+    }
+
+    public void setStats(boolean stats) {
+        this.stats = stats;
     }
 }
