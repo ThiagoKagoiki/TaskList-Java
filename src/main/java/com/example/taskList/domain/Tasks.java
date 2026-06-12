@@ -11,12 +11,20 @@ public class Tasks {
     //nesta pasta voce criara o objeto task com os getters e setters
     private String nameTask, descTask;
     private boolean stats;
-    private int id;
+    private String id;
 
     public Tasks(String nameTask, String descTask, boolean stats) {
         this.nameTask = nameTask;
         this.descTask = descTask;
         this.stats = stats;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNameTask() {

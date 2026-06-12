@@ -1,6 +1,7 @@
 package com.example.taskList.controller;
 
 
+import com.example.taskList.domain.EditTask;
 import com.example.taskList.domain.Tasks;
 import com.example.taskList.service.TaskListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,12 @@ public class TaskListController {
         return ResponseEntity.ok("Sucesso!");
     }
 
-
+    @PutMapping
+    public ResponseEntity editTask(@RequestBody EditTask editTask){
+        boolean resp = taskListService.editTask(editTask);
+        if(resp) return ResponseEntity.ok("Feito!");
+        else return ResponseEntity.notFound().build();
+    }
 
 
     //tentar fazer sem o arqv service

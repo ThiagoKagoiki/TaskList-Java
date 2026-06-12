@@ -1,5 +1,6 @@
 package com.example.taskList.service;
 
+import com.example.taskList.domain.EditTask;
 import com.example.taskList.domain.Tasks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ public class TaskListService {
 
     public List<Tasks> getAllTasks(){
         Tasks[] tarefas = restTemplate.getForObject(urlApi, Tasks[].class);
-        System.out.println(List.of(tarefas));
         return List.of(tarefas);
     }
 
@@ -26,13 +26,16 @@ public class TaskListService {
         return restTemplate.postForObject(urlApi, tasks, Tasks.class);
     }
 
-    public String editTask(String new_task, String old_task){
+    public boolean editTask(EditTask editTask){
         List<Tasks> tarefas = getAllTasks();
         for(Tasks t : tarefas){
-            if(t.getNameTask() == old_task){
-                return "";
+            if(editTask.getId().equals(t.getId())){
+                t.setNameTask(editTask.getNew_name());
+                String new_url = urlApi + '/' + editTask.getId();
+                restTemplate.put(new_url, t);
+                return true;
             }
         }
-        return "";
+        return false;
     }
 }
