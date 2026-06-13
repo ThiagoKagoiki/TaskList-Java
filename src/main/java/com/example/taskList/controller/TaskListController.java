@@ -51,5 +51,12 @@ public class TaskListController {
         if(resp) return ResponseEntity.ok("Feito!");
         else return ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping
+    public ResponseEntity deleteTask(@RequestBody String id){
+        boolean resp = taskListService.deleteTask(id);
+        if(resp) return ResponseEntity.ok("Feito!");
+        else return ResponseEntity.notFound().build();
+    }
     //tentar fazer sem o arqv service
 }

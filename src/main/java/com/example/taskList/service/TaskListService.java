@@ -46,4 +46,19 @@ public class TaskListService {
         }
         return false;
     }
+
+    public boolean deleteTask(String id){
+        List<Tasks> tarefas = getAllTasks();
+        for(Tasks t : tarefas){
+            System.out.println(id);
+            String id_tarefa = t.getId();
+            System.out.println(id_tarefa);
+            if(id.equals(id_tarefa)){
+                String new_url = urlApi + '/' + t.getId();
+                restTemplate.delete(new_url, t);
+                return true;
+            }
+        }
+        return false;
+    }
 }
