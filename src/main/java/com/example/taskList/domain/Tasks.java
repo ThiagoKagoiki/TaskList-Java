@@ -10,13 +10,13 @@ import java.util.Random;
 public class Tasks {
     //nesta pasta voce criara o objeto task com os getters e setters
     private String nameTask, descTask;
-    private boolean stats;
+    private boolean status;
     private String id_task;
 
-    public Tasks(String nameTask, String descTask, boolean stats) {
+    public Tasks(String nameTask, String descTask, boolean status) {
         this.nameTask = nameTask;
         this.descTask = descTask;
-        this.stats = stats;
+        this.status = status;
     }
 
     public String getId() {
@@ -44,10 +44,10 @@ public class Tasks {
     }
 
     public boolean isStats() {
-        return stats;
+        return status;
     }
 
     public void setStats(boolean stats) {
-        this.stats = stats;
+        this.status = stats;
     }
 }
