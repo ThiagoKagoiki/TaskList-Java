@@ -36,27 +36,27 @@ public class TaskListController {
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable("id") String id){
         Tasks task = taskListService.getById(id);
-        return ResponseEntity.ok(task);
+        return ResponseEntity.status(200).body("Feito!\n" + task);
     }
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity postTask(@RequestBody Tasks task){
         Tasks createdTask = taskListService.postTask(task);
-        return ResponseEntity.ok("Sucesso!");
+        return ResponseEntity.status(200).body("Feito!\n" + createdTask);
     }
 
     @PutMapping
     public ResponseEntity editTask(@RequestBody EditTask editTask){
         boolean resp = taskListService.editTask(editTask);
-        if(resp) return ResponseEntity.ok("Feito!");
+        if(resp) return ResponseEntity.status(200).body("Feito!\n");
         else return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping
     public ResponseEntity deleteTask(@RequestBody String id){
         boolean resp = taskListService.deleteTask(id);
-        if(resp) return ResponseEntity.ok("Feito!");
-        else return ResponseEntity.notFound().build();
+        if(resp) return ResponseEntity.status(200).body("Feito!\n");
+        else return ResponseEntity.status(400).body("Tarefa não concluída");
     }
     //tentar fazer sem o arqv service
 }
