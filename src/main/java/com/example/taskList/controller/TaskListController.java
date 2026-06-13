@@ -33,6 +33,12 @@ public class TaskListController {
         return ResponseEntity.ok(tasks);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable("id") String id){
+        Tasks task = taskListService.getById(id);
+        return ResponseEntity.ok(task);
+    }
+
     @PostMapping(consumes = "application/json")
     public ResponseEntity postTask(@RequestBody Tasks task){
         Tasks createdTask = taskListService.postTask(task);
@@ -45,7 +51,5 @@ public class TaskListController {
         if(resp) return ResponseEntity.ok("Feito!");
         else return ResponseEntity.notFound().build();
     }
-
-
     //tentar fazer sem o arqv service
 }
