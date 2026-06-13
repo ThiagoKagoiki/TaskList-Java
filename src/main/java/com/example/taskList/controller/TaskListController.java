@@ -52,6 +52,13 @@ public class TaskListController {
         else return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity tradeStatus(@PathVariable String id){
+        boolean resp = taskListService.tradeStatus(id);
+        if(resp) return ResponseEntity.status(200).body("Feito!\n");
+        else return ResponseEntity.notFound().build();
+    }
+
     @DeleteMapping
     public ResponseEntity deleteTask(@RequestBody String id){
         boolean resp = taskListService.deleteTask(id);

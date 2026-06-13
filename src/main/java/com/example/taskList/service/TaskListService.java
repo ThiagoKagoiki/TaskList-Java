@@ -30,7 +30,6 @@ public class TaskListService {
 
     public Tasks getById(String id){
         String new_url = urlApi + '/' + id;
-        System.out.println(id);
         Tasks task = restTemplate.getForObject(new_url, Tasks.class);
         return task;
     }
@@ -52,6 +51,18 @@ public class TaskListService {
             Tasks task = getById(id);
             String new_url = urlApi + '/' + task.getId();
             restTemplate.delete(new_url, task);
+            return true;
+        }catch (Error e){
+            return false;
+        }
+    }
+
+    public boolean tradeStatus(String id){
+        try{
+            Tasks tarefa = getById(id);
+            tarefa.setStats(!tarefa.isStats());
+            String new_url = urlApi + '/' + id;
+            restTemplate.put(new_url, tarefa);
             return true;
         }catch (Error e){
             return false;
