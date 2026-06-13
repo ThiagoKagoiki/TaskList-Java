@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class TaskListService {
@@ -49,16 +50,13 @@ public class TaskListService {
 
     public boolean deleteTask(String id){
         List<Tasks> tarefas = getAllTasks();
-        for(Tasks t : tarefas){
-            System.out.println(id);
-            String id_tarefa = t.getId();
-            System.out.println(id_tarefa);
-            if(id.equals(id_tarefa)){
-                String new_url = urlApi + '/' + t.getId();
-                restTemplate.delete(new_url, t);
-                return true;
-            }
+        try{
+            Tasks task = getById(id);
+            String new_url = urlApi + '/' + task.getId();
+            restTemplate.delete(new_url, task);
+            return true;
+        }catch (Error e){
+            return false;
         }
-        return false;
     }
 }
