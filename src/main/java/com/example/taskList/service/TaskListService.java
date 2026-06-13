@@ -36,20 +36,18 @@ public class TaskListService {
     }
 
     public boolean editTask(EditTask editTask){
-        List<Tasks> tarefas = getAllTasks();
-        for(Tasks t : tarefas){
-            if(editTask.getId().equals(t.getId())){
-                t.setNameTask(editTask.getNew_name());
-                String new_url = urlApi + '/' + editTask.getId();
-                restTemplate.put(new_url, t);
-                return true;
-            }
+        try{
+            Tasks task = getById(editTask.getId());
+            task.setNameTask(editTask.getNew_name());
+            String new_url = urlApi + '/' + task.getId();
+            restTemplate.put(new_url, task);
+            return true;
+        }catch (Error e){
+            return false;
         }
-        return false;
     }
 
     public boolean deleteTask(String id){
-        List<Tasks> tarefas = getAllTasks();
         try{
             Tasks task = getById(id);
             String new_url = urlApi + '/' + task.getId();
